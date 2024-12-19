@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Loop through each hostage and create a link
       data.forEach(hostage => {
         const hostageLink = document.createElement("a");
-        hostageLink.href = `hostage.html?id=${hostage.id}`; // Link to hostage page with id
+        hostageLink.href = `hostage.html?id=${hostage.id}&name=${encodeURIComponent(hostage.name)}`; // Link to hostage page with id
         hostageLink.classList.add("hostageLink");
         hostageLink.textContent = hostage.name;
 
