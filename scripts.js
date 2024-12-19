@@ -1,30 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const hostagesGrid = document.getElementById("hostagesGrid");
+// Function to fetch hostage names from the Google Apps Script Web App
+const getHostages = async () => {
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwbj1MLCTVPHDHrSwhHC5iuEtjMYc_SmACWn0ynrcX6L-nb9xJ3xcjiHo1OCrexZ8pK/exec");
+    if (!response.ok) throw new Error(`Network response was not OK. Status: ${response.status}`);
+    const hostages = await response.json();
 
-  // Fetch hostage names and display them in a grid
-  fetch("https://script.google.com/macros/s/AKfycbwbj1MLCTVPHDHrSwhHC5iuEtjMYc_SmACWn0ynrcX6L-nb9xJ3xcjiHo1OCrexZ8pK/exec")
-    .then(response => response.json())
-    .then(data => {
-      if (!data || data.length === 0) {
-        hostagesGrid.innerHTML = "No hostages available.";
-        return;
-      }
+    // Populate the hostage grid with links to individual hostage pages
+    const hostageGrid = document.getElementById("hostageGrid");
+    hostageGrid.innerHTML = hostages.map(hostage => `
+      <div class="grid-item">
+        <a href="hostage.html?id=${hostage.id}">${hostage.name}</a>
+      </div>
+    `).join("");
+  } catch (error) {
+    console.error("Error fetching hostages:", error);
+  }
+};
 
-      hostagesGrid.innerHTML = ''; // Clear any existing content
-
-      // Loop through each hostage and create a link
-      data.forEach(hostage => {
-        const hostageLink = document.createElement("a");
-        hostageLink.href = `hostage.html?id=${hostage.id}&name=${encodeURIComponent(hostage.name)}`; // Link to hostage page with id
-        hostageLink.classList.add("hostageLink");
-        hostageLink.textContent = hostage.name;
-
-        // Append each hostage link to the grid
-        hostagesGrid.appendChild(hostageLink);
-      });
-    })
-    .catch(error => {
-      console.error("Error fetching hostages:", error);
-      hostagesGrid.innerHTML = "Failed to load hostages. Please try again later.";
-    });
-});
+// Call the function to fetch hostages on page load
+document.addEventListener("DOMContentLoaded", getHostages);
