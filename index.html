@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tehillim for Hostages</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    a { text-decoration: none; color: blue; font-weight: bold; }
+    .hostage-list { margin: 20px auto; max-width: 600px; }
+    .hostage-item { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Tehillim for Hostages</h1>
+  <p>Select a hostage to sign up for chapters of Tehillim.</p>
+  <div class="hostage-list" id="hostageList"></div>
+
+  <script>
+    // Fetch the list of hostages dynamically from Google Apps Script
+    fetch("https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycby5OCAMAvzypaDxSICMNzhxRYQnHPVu_7R_naTrd6ZLl_4Q6DGBRjNnyZ1SgCWQb6_5/exec")
+      .then(response => response.json())
+      .then(data => {
+        const hostages = data.hostages;
+        const hostageList = document.getElementById("hostageList");
+        hostages.forEach((hostage, index) => {
+          const link = document.createElement("a");
+          link.href = `hostage.html?id=${index}`;  // Link to individual hostage page
+          link.textContent = hostage;
+
+          const item = document.createElement("div");
+          item.className = "hostage-item";
+          item.appendChild(link);
+
+          hostageList.appendChild(item);
+        });
+      })
+      .catch(err => console.error("Error fetching hostages:", err));
+  </script>
+</body>
+</html>
