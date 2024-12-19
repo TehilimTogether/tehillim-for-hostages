@@ -3,7 +3,7 @@
 // Function to fetch hostage names from the Google Apps Script Web App
 const getHostages = async () => {
   try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec");
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwbj1MLCTVPHDHrSwhHC5iuEtjMYc_SmACWn0ynrcX6L-nb9xJ3xcjiHo1OCrexZ8pK/exec");
     if (!response.ok) throw new Error(`Network response was not OK. Status: ${response.status}`);
     const hostages = await response.json();
 
