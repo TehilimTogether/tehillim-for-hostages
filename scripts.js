@@ -1,34 +1,51 @@
-// Fetch the list of hostages and display them on the homepage
-fetch('https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec')
-  .then(response => response.json())
-  .then(data => {
-    const hostages = data.hostages;
-    const hostageList = document.getElementById('hostageList');
-    hostages.forEach((hostage) => {
-      const link = document.createElement('a');
-      link.href = `hostage.html?name=${encodeURIComponent(hostage)}`;
-      link.textContent = hostage;
-      hostageList.appendChild(link);
+// scripts.js
+
+// Function to fetch hostage names from the Google Apps Script Web App
+const getHostages = async () => {
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec");
+    if (!response.ok) throw new Error(`Network response was not OK. Status: ${response.status}`);
+    const hostages = await response.json();
+
+    // Populate the dropdown with hostage names
+    const hostageDropdown = document.getElementById("hostageDropdown");
+    hostageDropdown.innerHTML = hostages.map((name) => `<option value="${name}">${name}</option>`).join("");
+  } catch (error) {
+    console.error("Error fetching hostages:", error);
+  }
+};
+
+// Function to handle form submission
+const handleFormSubmit = async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  // Get form data
+  const hostage = document.getElementById("hostageDropdown").value;
+  const chapter = document.getElementById("tehillimChapter").value;
+
+  if (!hostage || !chapter) {
+    alert("Please select a hostage and a chapter.");
+    return;
+  }
+
+  try {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ hostage, chapter }),
     });
-  })
-  .catch(error => console.error('Error fetching hostages:', error));
 
-// Handle the form submission for Tehillim chapter selection
-function submitForm(event) {
-  event.preventDefault();
+    if (!response.ok) throw new Error(`Failed to submit: ${response.statusText}`);
 
-  const hostageName = new URLSearchParams(window.location.search).get('name');
-  const selectedChapters = Array.from(document.querySelectorAll('.chapter.selected'))
-    .map(el => el.textContent);
-  
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
+    alert("Your chapter has been recorded. Thank you!");
+  } catch (error) {
+    console.error("Error submitting form:", error);
+    alert("Failed to submit your choice. Please try again later.");
+  }
+};
 
-  fetch('https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec', {
-    method: 'POST',
-    body: JSON.stringify({ hostageName, selectedChapters, name, email })
-  })
-    .then(response => response.json())
-    .then(data => alert(data.message))
-    .catch(error => console.error('Error submitting form:', error));
-}
+// Attach event listener to the form
+document.getElementById("tehillimForm").addEventListener("submit", handleFormSubmit);
+
+// Call the function to fetch hostages on page load
+getHostages();
