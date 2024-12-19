@@ -1,4 +1,3 @@
-// Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", function() {
   const hostagesGrid = document.getElementById("hostagesGrid");
 
@@ -7,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(response => response.json())
     .then(data => {
       if (!data || data.length === 0) {
-        console.error("No data received for hostages.");
         hostagesGrid.innerHTML = "No hostages available.";
         return;
       }
@@ -17,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
       // Loop through each hostage and create a link
       data.forEach(hostage => {
         const hostageLink = document.createElement("a");
-        hostageLink.href = `hostage.html?id=${hostage.id}`;
+        hostageLink.href = `hostage.html?id=${hostage.id}`; // Link to hostage page with id
         hostageLink.classList.add("hostageLink");
         hostageLink.textContent = hostage.name;
 
