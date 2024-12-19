@@ -7,15 +7,17 @@ const getHostages = async () => {
 
     // Populate the hostage grid with links to individual hostage pages
     const hostageGrid = document.getElementById("hostageGrid");
-    hostageGrid.innerHTML = hostages.map(hostage => `
-      <div class="grid-item">
-        <a href="hostage.html?id=${hostage.id}">${hostage.name}</a>
-      </div>
-    `).join("");
+    if (hostageGrid) {
+      hostageGrid.innerHTML = hostages.map(hostage => `
+        <div class="grid-item">
+          <a href="hostage.html?id=${hostage.id}">${hostage.name}</a>
+        </div>
+      `).join("");
+    }
   } catch (error) {
     console.error("Error fetching hostages:", error);
   }
 };
 
-// Call the function to fetch hostages on page load
+// Wait until the DOM is fully loaded to call getHostages
 document.addEventListener("DOMContentLoaded", getHostages);
