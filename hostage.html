@@ -34,10 +34,9 @@
       document.getElementById("hostageName").textContent = hostageName;
       document.title = `Chapters for ${hostageName}`; // Set page title
 
-      // Logic to display available chapters
+      // Logic to display available chapters (1 to 150)
       const chapterGrid = document.getElementById("chapterGrid");
 
-      // Create checkboxes for each chapter (1 to 150)
       for (let i = 1; i <= 150; i++) {
         const chapterLabel = document.createElement("label");
         chapterLabel.textContent = `Chapter ${i}`;
@@ -65,7 +64,7 @@
         }
 
         // Send the selected chapters to the server (Google Apps Script)
-        fetch("https://script.google.com/macros/s/AKfycbwbj1MLCTVPHDHrSwhHC5iuEtjMYc_SmACWn0ynrcX6L-nb9xJ3xcjiHo1OCrexZ8pK/exec", {
+        fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
