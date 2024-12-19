@@ -1,7 +1,29 @@
+/* Basic page styling */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+form {
+  margin-top: 20px;
+}
+
+/* Style for the chapter grid */
+#chapterGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  gap: 10px; /* Space between checkboxes */
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  text-align: center;
 }
 
 button {
@@ -9,30 +31,13 @@ button {
   font-size: 16px;
 }
 
-#hostageList {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hostage {
-  margin: 10px;
-  padding: 15px;
-  border: 1px solid #ccc;
-  text-align: center;
-  font-size: 18px;
-}
-
-.chapter {
-  margin: 5px;
-  display: inline-block;
+input[type="text"], input[type="email"] {
   padding: 8px;
-  border-radius: 5px;
-  background-color: #f0f0f0;
-  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+  width: 80%;
 }
 
-.chapter.selected {
-  background-color: #d3d3d3;
-  cursor: not-allowed;
+input[type="checkbox"] {
+  margin: 0;
 }
