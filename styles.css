@@ -9,26 +9,26 @@ h1 {
   color: #333;
 }
 
-form {
-  margin-top: 20px;
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 /* Style for the chapter grid */
 #chapterGrid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns */
+  grid-template-columns: repeat(5, 1fr); /* 5 columns for the checkboxes */
   gap: 10px; /* Space between checkboxes */
   margin-bottom: 20px;
+  justify-items: center; /* Center the checkboxes */
 }
 
 label {
-  display: block;
-  text-align: center;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 input[type="text"], input[type="email"] {
@@ -36,8 +36,23 @@ input[type="text"], input[type="email"] {
   font-size: 16px;
   margin-bottom: 10px;
   width: 80%;
+  box-sizing: border-box;
 }
 
 input[type="checkbox"] {
-  margin: 0;
+  margin-right: 10px; /* Space between checkbox and chapter label */
+}
+
+/* Style for the back button */
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ddd;
 }
