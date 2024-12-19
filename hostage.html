@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tehillim for Hostage</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    .chapter-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 600px; margin: 20px auto; }
+    .chapter { padding: 10px; border: 1px solid #ccc; cursor: pointer; }
+    .taken { background-color: grey; color: white; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <h1>Tehillim for Hostage</h1>
+  <p>Select chapters below and enter your details to confirm.</p>
+
+  <div class="chapter-grid" id="chapterGrid"></div>
+
+  <form id="signupForm" onsubmit="submitForm(event)">
+    <input type="text" id="name" placeholder="Your Name" required><br><br>
+    <input type="email" id="email" placeholder="Your Email" required><br><br>
+    <button type="submit">Confirm Selection</button>
+  </form>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const hostageId = urlParams.get("id");
+    
+    const totalChapters = 150; // Total chapters
+    const takenChapters = []; // Replace with a dynamic fetch from your backend (Google Sheets)
+
+    const grid = document.getElementById("chapterGrid");
+    for (let i = 1; i <= totalChapters; i++) {
+      const div = document.createElement("div");
+      div.textContent = `Perek ${i}`;
+      div.className = `chapter ${takenChapters.includes(i) ? "taken" : ""}`;
+      if (!takenChapters.includes(i)) {
+        div.addEventListener("click", () => div.classList.toggle("selected"));
+      }
+      grid.appendChild(div);
+    }
+
+    function submitForm(event) {
+      event.preventDefault();
+      const selectedChapters = Array.from(document.querySelectorAll(".chapter.selected"))
+        .map(el => el.textContent);
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+        method: "POST",
+        body: JSON.stringify({ hostageId, selectedChapters, name, email }),
+      })
+      .then(response => response.json())
+      .then(data => alert(data.message))
+      .catch(err => console.error(err));
+    }
+  </script>
+</body>
+</html>
