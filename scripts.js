@@ -1,4 +1,3 @@
-// Function to fetch hostage names from the Google Apps Script Web App
 const getHostages = async () => {
   try {
     const response = await fetch("https://script.google.com/macros/s/AKfycbwmCOlxNjYXbEwnY_0ggXqXlyPCSPG7k14HkxOoNX8ImopT-tQQ2pwZhZ2la6VKfxEL/exec");
@@ -10,7 +9,7 @@ const getHostages = async () => {
     if (hostageGrid) {
       hostageGrid.innerHTML = hostages.map(hostage => `
         <div class="grid-item">
-          <a href="hostage.html?id=${hostage.id}">${hostage.name}</a>
+          <a href="hostage.html?name=${encodeURIComponent(hostage.name)}">${hostage.name}</a>
         </div>
       `).join("");
     }
