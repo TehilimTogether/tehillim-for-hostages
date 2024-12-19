@@ -1,51 +1,102 @@
-// scripts.js
-
-// Function to fetch hostage names from the Google Apps Script Web App
+// Function to fetch hostage names and chapters from Google Apps Script Web App
 const getHostages = async () => {
   try {
     const response = await fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec");
-    if (!response.ok) throw new Error(`Network response was not OK. Status: ${response.status}`);
+    if (!response.ok) throw new Error("Failed to fetch hostages");
+    
     const hostages = await response.json();
 
-    // Populate the dropdown with hostage names
-    const hostageDropdown = document.getElementById("hostageDropdown");
-    hostageDropdown.innerHTML = hostages.map((name) => `<option value="${name}">${name}</option>`).join("");
+    // Render hostages with chapters
+    const hostageList = document.getElementById("hostageList");
+    hostageList.innerHTML = hostages.map(hostage => {
+      return `
+        <div class="hostage">
+          <h3>${hostage}</h3>
+          <div id="chapters-${hostage}">
+            ${generateChapters(hostage)}
+          </div>
+        </div>
+      `;
+    }).join('');
   } catch (error) {
     console.error("Error fetching hostages:", error);
   }
 };
 
-// Function to handle form submission
-const handleFormSubmit = async (event) => {
-  event.preventDefault(); // Prevent default form submission
+// Generate chapter buttons for each hostage
+const generateChapters = (hostage) => {
+  let chapters = '';
+  for (let i = 1; i <= 150; i++) {
+    chapters += `<button class="chapter" id="chapter-${hostage}-${i}" onclick="selectChapter('${hostage}', ${i})">${i}</button>`;
+  }
+  return chapters;
+};
 
-  // Get form data
-  const hostage = document.getElementById("hostageDropdown").value;
-  const chapter = document.getElementById("tehillimChapter").value;
+// Store selected chapters
+let selectedChapters = {};
 
-  if (!hostage || !chapter) {
-    alert("Please select a hostage and a chapter.");
+const selectChapter = (hostage, chapter) => {
+  const chapterId = `chapter-${hostage}-${chapter}`;
+  const chapterButton = document.getElementById(chapterId);
+  
+  // If the chapter is already selected, do nothing
+  if (chapterButton.classList.contains('selected')) return;
+
+  chapterButton.classList.add('selected');
+  if (!selectedChapters[hostage]) selectedChapters[hostage] = [];
+  selectedChapters[hostage].push(chapter);
+};
+
+// Handle form submission
+const submitForm = async (event) => {
+  event.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+
+  if (!Object.keys(selectedChapters).length) {
+    alert("Please select at least one chapter.");
     return;
   }
 
   try {
+    // Prepare data to be sent to Google Apps Script
+    const data = {
+      name,
+      email,
+      selectedChapters,
+    };
+
     const response = await fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ hostage, chapter }),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
     });
 
-    if (!response.ok) throw new Error(`Failed to submit: ${response.statusText}`);
-
-    alert("Your chapter has been recorded. Thank you!");
+    const result = await response.json();
+    if (result.status === 'success') {
+      alert('Thank you for signing up!');
+      // Disable further chapter selection
+      updateChapterStatus(selectedChapters);
+    } else {
+      alert('Error signing up. Please try again.');
+    }
   } catch (error) {
     console.error("Error submitting form:", error);
-    alert("Failed to submit your choice. Please try again later.");
   }
 };
 
-// Attach event listener to the form
-document.getElementById("tehillimForm").addEventListener("submit", handleFormSubmit);
+// Function to update chapter status after form submission
+const updateChapterStatus = (selectedChapters) => {
+  for (const hostage in selectedChapters) {
+    selectedChapters[hostage].forEach(chapter => {
+      const chapterId = `chapter-${hostage}-${chapter}`;
+      const chapterButton = document.getElementById(chapterId);
+      chapterButton.classList.add('selected');
+      chapterButton.disabled = true;
+    });
+  }
+};
 
-// Call the function to fetch hostages on page load
-getHostages();
+// Call the function to load hostages on page load
+window.onload = getHostages;
