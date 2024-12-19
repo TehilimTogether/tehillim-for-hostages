@@ -1,5 +1,5 @@
 // Fetch the list of hostages and display them on the homepage
-fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec')
+fetch('https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbzaFXuirlfLUELq4Wq65A399QZyC07xCXx86UhhrkM/dev/exec')
   .then(response => response.json())
   .then(data => {
     const hostages = data.hostages;
@@ -24,7 +24,7 @@ function submitForm(event) {
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
 
-  fetch('https://script.google.com/macros/s/YOUR_WEB_APP_URL/exec', {
+  fetch('https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbzaFXuirlfLUELq4Wq65A399QZyC07xCXx86UhhrkM/dev/exec', {
     method: 'POST',
     body: JSON.stringify({ hostageName, selectedChapters, name, email })
   })
