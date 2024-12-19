@@ -9,45 +9,41 @@ h1 {
   color: #333;
 }
 
-button {
-  padding: 10px 20px;
-  font-size: 16px;
+p {
+  font-size: 18px;
   margin-bottom: 20px;
 }
 
-/* Style for the chapter grid */
-#chapterGrid {
+/* Grid layout for the hostages */
+#hostagesGrid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 columns for the checkboxes */
-  gap: 10px; /* Space between checkboxes */
-  margin-bottom: 20px;
-  justify-items: center; /* Center the checkboxes */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Auto-fit grid columns */
+  gap: 15px; /* Space between items */
+  padding: 20px;
 }
 
-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-input[type="text"], input[type="email"] {
-  padding: 8px;
+.hostageLink {
+  display: block;
+  text-align: center;
+  padding: 15px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
   font-size: 16px;
-  margin-bottom: 10px;
-  width: 80%;
-  box-sizing: border-box;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-input[type="checkbox"] {
-  margin-right: 10px; /* Space between checkbox and chapter label */
+.hostageLink:hover {
+  background-color: #ddd;
 }
 
-/* Style for the back button */
+/* Optional: Style for the back button on hostage.html */
 button {
-  margin-top: 20px;
   padding: 10px 20px;
   font-size: 16px;
+  margin-top: 20px;
   background-color: #f0f0f0;
   border: none;
   cursor: pointer;
