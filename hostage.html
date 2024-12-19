@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tehillim for Hostage</title>
+  <title>Hostage Details</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <h1>Tehillim for Hostage</h1>
-  <p>Select chapters of Tehillim below and enter your details to confirm.</p>
-
-  <div class="chapter-grid" id="chapterGrid"></div>
-
+  <p>Select chapters below and enter your details to confirm your selection.</p>
+  
+  <div id="chapterGrid"></div>
+  
   <form id="signupForm" onsubmit="submitForm(event)">
     <input type="text" id="name" placeholder="Your Name" required><br><br>
     <input type="email" id="email" placeholder="Your Email" required><br><br>
     <button type="submit">Confirm Selection</button>
   </form>
-
+  
   <script src="scripts.js"></script>
 </body>
 </html>
