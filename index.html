@@ -14,29 +14,5 @@
   <div id="hostagesGrid"></div>
   
   <script src="scripts.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Fetch hostage names and display them in a grid
-      fetch("https://script.google.com/macros/s/AKfycbwbj1MLCTVPHDHrSwhHC5iuEtjMYc_SmACWn0ynrcX6L-nb9xJ3xcjiHo1OCrexZ8pK/exec")
-        .then(response => response.json())
-        .then(data => {
-          const hostagesGrid = document.getElementById("hostagesGrid");
-          hostagesGrid.innerHTML = ''; // Clear any existing content
-
-          // Loop through each hostage and create a link
-          data.forEach(hostage => {
-            const hostageLink = document.createElement("a");
-            hostageLink.href = `hostage.html?id=${hostage.id}`;
-            hostageLink.classList.add("hostageLink");
-            hostageLink.textContent = hostage.name;
-            
-            hostagesGrid.appendChild(hostageLink);
-          });
-        })
-        .catch(error => {
-          console.error("Error fetching hostages:", error);
-        });
-    });
-  </script>
 </body>
 </html>
