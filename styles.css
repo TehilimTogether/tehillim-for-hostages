@@ -4,14 +4,34 @@ body {
   margin: 20px;
 }
 
-a {
-  display: block;
-  margin: 10px 0;
-  font-size: 20px;
-  color: blue;
-}
-
 button {
   padding: 10px 20px;
   font-size: 16px;
+}
+
+#hostageList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hostage {
+  margin: 10px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.chapter {
+  margin: 5px;
+  display: inline-block;
+  padding: 8px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.chapter.selected {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
 }
