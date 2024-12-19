@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const hostagesGrid = document.getElementById("hostagesGrid");
 
   // Fetch hostage names and display them in a grid
-  fetch("https://script.google.com/macros/s/AKfycbz5_tBaArtfum1bdkqudVKuKTtibUhHrHnVOIIcIcI3bBRrlI0gpremIj8Cjli1gtQ/exec")
+  fetch("https://script.google.com/macros/s/AKfycbwbj1MLCTVPHDHrSwhHC5iuEtjMYc_SmACWn0ynrcX6L-nb9xJ3xcjiHo1OCrexZ8pK/exec")
     .then(response => response.json())
     .then(data => {
       if (!data || data.length === 0) {
