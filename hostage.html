@@ -26,9 +26,9 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const hostageId = urlParams.get("id");
-    
-    const totalChapters = 150; // Total chapters
-    const takenChapters = []; // Replace with a dynamic fetch from your backend (Google Sheets)
+
+    const totalChapters = 150; // 150 perakim
+    const takenChapters = []; // Replace with a dynamic fetch from your backend
 
     const grid = document.getElementById("chapterGrid");
     for (let i = 1; i <= totalChapters; i++) {
@@ -48,7 +48,7 @@
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
 
-      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec", {
+      fetch("https://script.google.com/macros/s/YOUR_SCRIPT_URL_HERE/exec", {
         method: "POST",
         body: JSON.stringify({ hostageId, selectedChapters, name, email }),
       })
