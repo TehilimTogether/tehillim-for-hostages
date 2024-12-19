@@ -1,43 +1,17 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+  margin: 20px;
 }
 
-h1 {
-  color: #333;
-}
-
-.hostage-list {
-  margin-top: 20px;
-}
-
-.hostage-item {
+a {
+  display: block;
   margin: 10px 0;
+  font-size: 20px;
+  color: blue;
 }
 
-.chapter-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  max-width: 600px;
-  margin: 20px auto;
-}
-
-.chapter {
-  padding: 10px;
-  border: 1px solid #ccc;
-  cursor: pointer;
-}
-
-.chapter.selected {
-  background-color: #d4edda;
-}
-
-.chapter.taken {
-  background-color: grey;
-  color: white;
-  pointer-events: none;
+button {
+  padding: 10px 20px;
+  font-size: 16px;
 }
